@@ -28,3 +28,9 @@ Andrew - lox
 Ловушки:
 -мина(отнимает здоровье и очки)
 -яма(при попадании игрок отнимает)
+
+1. зона меняет свойства игрока только если игрок находится в зоне полностью
+
+1. рандом зон - проверка грнаниц
+2. check type of entity - if needed -> add id
+3. Антон - static zone | Андрей - dynamic(mob) zone | Кирилл - invisible and start menu | I - Dynamic | Влада - Main End Game Logic
