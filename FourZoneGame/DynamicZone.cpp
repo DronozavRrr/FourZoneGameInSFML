@@ -24,6 +24,7 @@ void DynamicZone::Update(const shared_ptr<Player>& player)
 				if (Utils::IsType<Entity, Bullet>(playerEntity.get()))
 				{
 					((Bullet*)playerEntity.get())->SetFlying(false);
+					player->SetPoints(player->GetPoints() + 1);
 				}
 				// if type == mob -> points++
 			}

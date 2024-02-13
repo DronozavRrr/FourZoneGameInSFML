@@ -25,12 +25,17 @@ public:
 
 	void SetSliding(bool flag) { Sliding = flag; }
 	void SetShooting(bool flag) { Shooting = flag; }
+	
+	int GetPoints() { return points; }
+	void SetPoints(int point) { this->points = point; }
 
 	sf::Vector2f center;
 private:
 	bool Visible = true;
 	bool Sliding = false;
 	bool Shooting = false;
+
+	int points = 0;
 
 	const float  speedFactor{ 0.1f };
 	sf::Vector2f velocity{ 0.f, 0.f };

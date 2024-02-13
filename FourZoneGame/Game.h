@@ -29,5 +29,6 @@ private:
 	void Update(const sf::Time& elapsedTime);
 	void Draw(const sf::Time& elapsed);
 	void DrawFPS(const sf::Time& elapsed);
+	void DrawPoints(const shared_ptr<Player>& player);
 };
 
