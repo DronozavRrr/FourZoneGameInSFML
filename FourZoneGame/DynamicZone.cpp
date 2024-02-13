@@ -43,22 +43,4 @@ void DynamicZone::Update(const shared_ptr<Player>& player)
 			}
 		}
 	}
-
-	
-
-	// bullets
-	/*for (uint32_t i = 0; i < entities.size(); i++)
-	{
-		auto& entity = entities[i];
-		entity->Update();
-
-		if (!zone->Contains(entity))
-		{
-			((Bullet*)entity.get())->SetFlying(false);
-		}
-		else
-		{
-			((Bullet*)entity.get())->SetFlying(true);
-		}
-	}*/
 }

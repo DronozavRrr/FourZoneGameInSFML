@@ -5,9 +5,8 @@ void Bullet::Update(const sf::Time& elapsed)
 {
 	velocity = { 0.f, 0.f };
 
-	sf::Transform rotation;
 	// in normalized
-	velocity = rotation.transformPoint(direction);
+	velocity = direction;
 	velocity.x *= speed.x;
 	velocity.y *= speed.y;
 

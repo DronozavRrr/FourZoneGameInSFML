@@ -27,9 +27,11 @@ public:
 	virtual void                   SetZoneBounds(const sf::FloatRect& bounds);
 	virtual sf::FloatRect          GetZoneBounds() const;
 	virtual sf::FloatRect          GetBounds() const { return sprite->getGlobalBounds(); }
+	virtual sf::FloatRect          GetLocalBounds() const { return sprite->getLocalBounds(); };
 	virtual shared_ptr<sf::Sprite> GetSprite() const { return sprite; }
 	virtual void                   SetSprite(const shared_ptr<sf::Sprite>& _sprite) { sprite = sprite; }
 	virtual void                   SetPosition(const sf::Vector2f& pos) { sprite->setPosition(pos); }
+	virtual void                   SetOrigin(const sf::Vector2f& pos) { sprite->setOrigin(pos); }
 
 	virtual sf::Vector2f GetRelativeWindowScale(const sf::Vector2f& windowSize) const;
 	virtual void	     SclaleRelativeWindow(const sf::Vector2f& scale, const sf::Vector2f& windowSize);

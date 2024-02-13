@@ -23,7 +23,8 @@ public:
             + std::to_string(rect.top) + ", bottom : " + std::to_string(rect.top + rect.height) + "]";
     }
 
-    static std::string doubleToString(double number, uint32_t precision = 1);
+    static string doubleToString(double number, uint32_t precision = 1);
+    static sf::Vector2f getTranslate(const sf::Transform& transform);
 
     static sf::Vector2f GetWindowSize(const sf::RenderWindow& window);
     static sf::Vector2u ToVector2u(const sf::Vector2f& v) { return { uint32_t(v.x), uint32_t(v.y)}; }

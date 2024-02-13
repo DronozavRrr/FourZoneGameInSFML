@@ -92,3 +92,9 @@ std::string Utils::doubleToString(double number, uint32_t precision)
 	std::string str = std::to_string(number);
 	return str.substr(0, str.find('.') + 1 + precision);
 }
+
+sf::Vector2f Utils::getTranslate(const sf::Transform& transform)
+{
+	const auto& mat = transform.getMatrix();
+	return { mat[12], mat[13] };
+}

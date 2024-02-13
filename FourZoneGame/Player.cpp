@@ -68,13 +68,9 @@ void Player::Update(const sf::Time& elapsed)
 
 void Player::Shoot(const sf::FloatRect& zoneBounds)
 {
-	float playerRectWidth = this->sprite->getGlobalBounds().getSize().x;
-	auto&& normalizeDirection = Utils::Normalize(direction);
-	sf::Vector2f offset = { normalizeDirection.x * playerRectWidth, normalizeDirection.y * playerRectWidth };;
-	auto pos = this->sprite->getPosition() + offset;
+	auto pos = sprite->getTransform().transformPoint(this->GetShotPoint());
 	if (!zoneBounds.contains(pos))
 		return;
-
 
 	if (Shooting)
 	{
@@ -88,7 +84,7 @@ void Player::Shoot(const sf::FloatRect& zoneBounds)
 
 		// other geometry
 		bullet->SetZoneBounds(zoneBounds);
-		bullet->SetDirection(normalizeDirection);
+		bullet->SetDirection(Utils::Normalize(direction));
 		bullet->SclaleRelativeWindow({ 0.01f, 0.01f }, this->zoneBounds.getSize());
 		bullet->SetSpeed({ 1.f, 1.f });
 		// rotate bullet sprite

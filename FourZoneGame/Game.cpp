@@ -16,10 +16,14 @@ Game::Game(uint32_t width, uint32_t height)
     const auto& playerSprite = Resources::LoadSprite("player texture", "res/img/player.png");
     const auto& shotSound = Resources::LoadSound("shot", "res/sounds/shot2.wav");
     player = shared_ptr<Player>(new Player(playerSprite, shotSound));
+    // set origin before any transformation
+    player->SetOrigin({ player->GetBounds().getSize().x * 0.5f, player->GetBounds().getSize().y * 0.5f });
     player->SclaleRelativeWindow({ 0.05, 0.05 }, Utils::ToVector2f(window->getSize()));
     player->SetPosition({100, 100});
     player->SetDirection({ 1.f, 0.f });
     player->SetZoneBounds({sf::Vector2f(0.f, 0.f), Utils::GetWindowSize(*window)});
+    const auto& localPlayerRect = player->GetLocalBounds();
+    player->SetGunPoint({ localPlayerRect.left + localPlayerRect.width * 0.8f, localPlayerRect.top + localPlayerRect.height * 0.7f});
 
     // init bullet
     Resources::LoadTexture("bullet", "res/img/bullet.png");
@@ -68,14 +72,9 @@ void Game::Run()
                 // rotate
                 sf::Vector2i posi = sf::Mouse::getPosition(*window);
                 sf::Vector2f mpos = { float(posi.x), float(posi.y) };
-                const auto& rect = player->GetBounds();
-                sf::Vector2f center = {
-                    rect.getPosition().x + rect.getSize().x * 0.5f,
-                    rect.getPosition().y + rect.getSize().y * 0.5f,
-                };
-
-                player->GetSprite()->setOrigin(center);
-                player->SetDirection(mpos - center);
+              
+                sf::Vector2f center = player->GetSprite()->getTransform().transformPoint(player->center);                
+                player->SetDirection(mpos - player->GetSprite()->getPosition());
             } 
 
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
