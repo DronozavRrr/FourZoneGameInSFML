@@ -38,6 +38,7 @@ public:
     static float        Angle(const sf::Vector2f& direction);
     static float        ToDegrees(float radians);
     static bool         Contains(const sf::FloatRect& r1, const sf::FloatRect& r2);
+    static sf::FloatRect GetTransformRect(const shared_ptr<sf::Sprite>& sprite);
 
     // gets the next random value as a float within the range [ 0.0, 1.0]
     static float Uniliteral();

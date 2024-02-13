@@ -4,6 +4,7 @@
 #include "Utils.h"
 #include "Player.h"
 #include "SlideZone.h"
+#include "Enemy.h"
 
 Game::Game(uint32_t width, uint32_t height)
 {
@@ -44,6 +45,22 @@ Game::Game(uint32_t width, uint32_t height)
     zones[ZONE_TYPE::INVISIBLE]->SetPosition({ 0.f, 0.f });
     zones[ZONE_TYPE::DYNAMIC]->SetPosition({ windowSize.x * 0.5f, 0.f });
     zones[ZONE_TYPE::STATIC]->SetPosition({ 0.f,  windowSize.y * 0.5f });
+
+    // Dynamic Zone
+    for (size_t i = 0; i < 5; i++)
+    {
+        auto bounds = zones[ZONE_TYPE::DYNAMIC]->GetBounds();
+        const auto& sprite = Resources::GetSprite("player texture");
+        sprite->setOrigin({ player->GetBounds().getSize().x * 0.5f, player->GetBounds().getSize().y * 0.5f });
+        sprite->setPosition(Utils::RandomBetween(bounds.left, bounds.left + bounds.width), Utils::RandomBetween(bounds.top, bounds.top + bounds.height));
+        sprite->setColor(sf::Color(Utils::Uniliteral() * 255.f, Utils::Uniliteral() * 255.f, Utils::Uniliteral() * 255.f, 255));
+        const auto& sound = Resources::GetSound("shot");
+        Enemy* enemy = new Enemy(sprite, sound);
+        enemy->SclaleRelativeWindow({ 0.05, 0.05 }, Utils::ToVector2f(window->getSize()));
+        enemy->SetDirection({Utils::Uniliteral(), Utils::Uniliteral()});
+        enemy->SetZoneBounds(zones[ZONE_TYPE::DYNAMIC]->GetBounds());
+        zones[ZONE_TYPE::DYNAMIC]->Add(enemy);
+    }
 
     // SLIDE ZONE
     auto& slideZone = zones[ZONE_TYPE::SLIDE];
@@ -134,12 +151,17 @@ void Game::Draw(const sf::Time& elapsed)
     // draw fps
     DrawFPS(elapsed);
 
+
+    sf::CircleShape c(1.f);
+    c.setFillColor(sf::Color::Red);
+    c.setPosition(player->GetSprite()->getPosition());
+    window->draw(c);
     window->display();
 }
 
 void Game::DrawFPS(const sf::Time& elapsed)
 {
-    sf::Text text(sf::String(" " + std::to_string(elapsed.asMilliseconds()) + " ms"), *Resources::GetFont("font"), 28);
+    sf::Text text(sf::String(" " + std::to_string(elapsed.asMicroseconds()) + " ms"), *Resources::GetFont("font"), 28);
     text.setFillColor(sf::Color::Green);
     text.setStyle(sf::Text::Bold);
     window->draw(text);

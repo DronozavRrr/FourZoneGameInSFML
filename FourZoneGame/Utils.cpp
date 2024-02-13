@@ -87,6 +87,13 @@ bool Utils::Contains(const sf::FloatRect& r1, const sf::FloatRect& r2)
 	return l && r && t && b;
 }
 
+sf::FloatRect Utils::GetTransformRect(const shared_ptr<sf::Sprite>& sprite)
+{
+	sf::FloatRect rect;
+	const auto&& local = sprite->getLocalBounds();
+	return rect;
+}
+
 std::string Utils::doubleToString(double number, uint32_t precision)
 {
 	std::string str = std::to_string(number);
