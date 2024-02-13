@@ -18,6 +18,35 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="DynamicZone.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="SlideZone.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Zone.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="DynamicZone.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="library.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Resources.h" />
+    <ClInclude Include="SlideZone.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="Zone.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -128,5 +157,26 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\sfml_system.redist.2.6.0\build\native\sfml_system.redist.targets" Condition="Exists('..\packages\sfml_system.redist.2.6.0\build\native\sfml_system.redist.targets')" />
+    <Import Project="..\packages\sfml_system.2.6.0\build\native\sfml_system.targets" Condition="Exists('..\packages\sfml_system.2.6.0\build\native\sfml_system.targets')" />
+    <Import Project="..\packages\sfml_window.redist.2.6.0\build\native\sfml_window.redist.targets" Condition="Exists('..\packages\sfml_window.redist.2.6.0\build\native\sfml_window.redist.targets')" />
+    <Import Project="..\packages\sfml_window.2.6.0\build\native\sfml_window.targets" Condition="Exists('..\packages\sfml_window.2.6.0\build\native\sfml_window.targets')" />
+    <Import Project="..\packages\sfml_graphics.redist.2.6.0\build\native\sfml_graphics.redist.targets" Condition="Exists('..\packages\sfml_graphics.redist.2.6.0\build\native\sfml_graphics.redist.targets')" />
+    <Import Project="..\packages\sfml_graphics.2.6.0\build\native\sfml_graphics.targets" Condition="Exists('..\packages\sfml_graphics.2.6.0\build\native\sfml_graphics.targets')" />
+    <Import Project="..\packages\sfml_audio.redist.2.6.0\build\native\sfml_audio.redist.targets" Condition="Exists('..\packages\sfml_audio.redist.2.6.0\build\native\sfml_audio.redist.targets')" />
+    <Import Project="..\packages\sfml_audio.2.6.0\build\native\sfml_audio.targets" Condition="Exists('..\packages\sfml_audio.2.6.0\build\native\sfml_audio.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\sfml_system.redist.2.6.0\build\native\sfml_system.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_system.redist.2.6.0\build\native\sfml_system.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_system.2.6.0\build\native\sfml_system.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_system.2.6.0\build\native\sfml_system.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_window.redist.2.6.0\build\native\sfml_window.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_window.redist.2.6.0\build\native\sfml_window.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_window.2.6.0\build\native\sfml_window.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_window.2.6.0\build\native\sfml_window.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_graphics.redist.2.6.0\build\native\sfml_graphics.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_graphics.redist.2.6.0\build\native\sfml_graphics.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_graphics.2.6.0\build\native\sfml_graphics.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_graphics.2.6.0\build\native\sfml_graphics.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_audio.redist.2.6.0\build\native\sfml_audio.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_audio.redist.2.6.0\build\native\sfml_audio.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml_audio.2.6.0\build\native\sfml_audio.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml_audio.2.6.0\build\native\sfml_audio.targets'))" />
+  </Target>
 </Project>
