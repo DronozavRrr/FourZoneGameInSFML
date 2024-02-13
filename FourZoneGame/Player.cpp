@@ -10,8 +10,7 @@ void Player::Update(const sf::Time& elapsed)
 		velocity = { 0.f, 0.f };
 
 	auto&& temp = elapsed.asMilliseconds() * speedFactor;
-	//sf::Vector2f speed = { temp, temp };
-	sf::Vector2f speed = { 1.f, 1.f };
+	sf::Vector2f speed = { temp, temp };
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{

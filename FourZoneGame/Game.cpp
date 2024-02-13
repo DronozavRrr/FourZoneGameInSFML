@@ -36,6 +36,7 @@ Game::Game(uint32_t width, uint32_t height)
         const auto& sprite = Resources::GetSprite(Resources::PLACEHOLDER);
         sprite->setColor(sf::Color(Utils::Uniliteral() * 255.f, Utils::Uniliteral() * 255.f, Utils::Uniliteral() * 255.f, 255));
         const auto& sound = Resources::LoadSound("sound zone " + std::to_string(i), "res/sounds/sound" + std::to_string(i + 1) + ".ogg");
+        sound->setVolume(0);
         auto& zone = zones[i];
         zone = shared_ptr<DynamicZone>(new DynamicZone(sprite, sound));
         zone->SclaleRelativeWindow({ 0.5, 0.5 }, Utils::ToVector2f(window->getSize()));
@@ -107,9 +108,16 @@ void Game::Run()
             }
         }
         
+        
         sf::Time elapsed = clock->restart();
-        Update(elapsed);
-        Draw(elapsed);
+        if (elapsed.asMilliseconds() < 5)
+        {
+            sf::sleep(sf::milliseconds(5) - elapsed);
+            Update(elapsed);
+            Draw(elapsed);
+        }
+
+      
     }
 }
 

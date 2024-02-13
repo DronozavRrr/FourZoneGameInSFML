@@ -32,7 +32,7 @@ private:
 	bool Sliding = false;
 	bool Shooting = false;
 
-	const float  speedFactor{ 0.05f };
+	const float  speedFactor{ 0.1f };
 	sf::Vector2f velocity{ 0.f, 0.f };
 	sf::Vector2f direction{ 0.f, 0.f };
 
