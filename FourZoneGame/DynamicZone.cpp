@@ -7,13 +7,26 @@ void DynamicZone::Update(const shared_ptr<Player>& player)
 {
 	player->SetSliding(false);
 	player->Shoot(this->GetBounds());
+
+	
+
 	
 	for (auto& entity : entities)
 	{
 		// mob intersects player
 		if (entity->Intersect(player))
 		{
+			if (player->attackClock.getElapsedTime() >= player->attackCooldown)
+			{
+				std::cout << "mob intersects player" << std::endl;
+				player->SetHealth(player->GetHealth() - 10);
+				player->attackClock.restart();
 
+				if (player->GetHealth() <= 0)
+				{
+					//конец игры или респавн, что по логике реализуем
+				}
+			}
 		}
 
 		// player bullets intersects mobs
@@ -25,8 +38,9 @@ void DynamicZone::Update(const shared_ptr<Player>& player)
 				{
 					((Bullet*)playerEntity.get())->SetFlying(false);
 					player->SetPoints(player->GetPoints() + 1);
+					std::cout << "player bullets intersects mobs" << std::endl;
+					/*entity->Erase(1);*/
 				}
-				// if type == mob -> points++
 			}
 		}
 
@@ -38,8 +52,14 @@ void DynamicZone::Update(const shared_ptr<Player>& player)
 				if(ent->Intersect(player))
 					if (Utils::IsType<Entity, Bullet>(ent.get()))
 					{
+						std::cout << "mob bullets intersects player" << std::endl;
 						((Bullet*)ent.get())->SetFlying(false);
-						// player.life--
+						player->SetHealth(player->GetHealth() - 10);
+
+						if (player->GetHealth() <= 0)
+						{
+							//конец игры или респавн, что по логике реализуем
+						}
 					}
 			}
 		}

@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "Player.h"
 
 class Enemy : public Entity
 {
@@ -11,6 +12,7 @@ public:
 public:
 	void Update(const sf::Time& elapsed) override;
 	void SetDirection(const sf::Vector2f& v) { direction = v; }
+	void Shoot(const sf::FloatRect& zoneBounds, const shared_ptr<Player>& player);
 private:
 	unique_ptr<sf::Clock> clock;
 	sf::Vector2f velocity{ 0.f, 0.f };

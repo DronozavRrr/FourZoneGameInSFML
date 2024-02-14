@@ -156,9 +156,11 @@ void Game::Draw(const sf::Time& elapsed)
 
     player->Draw(window);
 
-    // draw fps
+    // draw 
+    DrawPointsAndHealth(player);
     DrawFPS(elapsed);
-    DrawPoints(player);
+
+
 
 
     sf::CircleShape c(1.f);
@@ -168,21 +170,29 @@ void Game::Draw(const sf::Time& elapsed)
     window->display();
 }
 
-void Game::DrawPoints(const shared_ptr<Player>& player)
+void Game::DrawPointsAndHealth(const shared_ptr<Player>& player)
 {
-    int points = player->GetPoints();
-    sf::Text text(sf::String(std::to_string(points) + " points"), *Resources::GetFont("font"), 28);
-    text.setFillColor(sf::Color::Yellow);
+    int health = player->GetHealth();
+    sf::Text text(sf::String(std::to_string(health) + "% hp"), *Resources::GetFont("font"), 28);
+    text.setFillColor(sf::Color::Red);
     text.setStyle(sf::Text::Bold);
     text.setPosition(10, 10);
     window->draw(text);
-
+    int points = player->GetPoints();
+    sf::Text text2(sf::String(std::to_string(points) + " points"), *Resources::GetFont("font"), 28);
+    text2.setFillColor(sf::Color::Yellow);
+    text2.setStyle(sf::Text::Bold);
+    text2.setPosition(150, 10);
+    window->draw(text2);
 }
+
+
 
 void Game::DrawFPS(const sf::Time& elapsed)
 {
-    //sf::Text text(sf::String(" " + std::to_string(elapsed.asMicroseconds()) + " ms"), *Resources::GetFont("font"), 28);
-    //text.setFillColor(sf::Color::Green);
-    //text.setStyle(sf::Text::Bold);
-    //window->draw(text);
+    sf::Text text(sf::String(" " + std::to_string(elapsed.asMicroseconds()) + " ms"), *Resources::GetFont("font"), 28);
+    text.setFillColor(sf::Color::Green);
+    text.setStyle(sf::Text::Bold);
+    text.setPosition(1650, 10);
+    window->draw(text);
 }

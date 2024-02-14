@@ -29,6 +29,13 @@ public:
 	int GetPoints() { return points; }
 	void SetPoints(int point) { this->points = point; }
 
+	int GetHealth() { return health; }
+	void SetHealth(int health) { this->health = health; }
+
+
+	sf::Clock attackClock;
+	const sf::Time attackCooldown = sf::seconds(1); // ќпредел€ем интервал в одну секунду между атаками
+
 	sf::Vector2f center;
 private:
 	bool Visible = true;
@@ -36,6 +43,7 @@ private:
 	bool Shooting = false;
 
 	int points = 0;
+	int health = 100;
 
 	const float  speedFactor{ 0.1f };
 	sf::Vector2f velocity{ 0.f, 0.f };
