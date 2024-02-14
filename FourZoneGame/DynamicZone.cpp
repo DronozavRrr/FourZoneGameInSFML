@@ -11,8 +11,9 @@ void DynamicZone::Update(const shared_ptr<Player>& player)
 	
 
 	
-	for (auto& entity : entities)
+	for (auto it = entities.begin(); it != entities.end();it++)
 	{
+		auto& entity = *it;
 		// mob intersects player
 		if (entity->Intersect(player))
 		{
@@ -39,7 +40,13 @@ void DynamicZone::Update(const shared_ptr<Player>& player)
 					((Bullet*)playerEntity.get())->SetFlying(false);
 					player->SetPoints(player->GetPoints() + 1);
 					std::cout << "player bullets intersects mobs" << std::endl;
-					/*entity->Erase(1);*/
+					entities.erase(it);
+					if (entities.empty())
+					{
+						break;
+					}
+					it = entities.begin();
+					break; // Выходим из цикла, так как сущность уже удалена
 				}
 			}
 		}
@@ -63,5 +70,10 @@ void DynamicZone::Update(const shared_ptr<Player>& player)
 					}
 			}
 		}
+		if (entities.empty())
+		{
+			break;
+		}
+		
 	}
 }
