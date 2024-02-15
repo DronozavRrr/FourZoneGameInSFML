@@ -2,31 +2,45 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Resources.h"
+#include "Bonus.h"
 
 void DynamicZone::Update(const shared_ptr<Player>& player)
 {
 	player->SetSliding(false);
+	player->SetVisible(true);
 	player->Shoot(this->GetBounds());
 
-	
-
-	
-	for (auto it = entities.begin(); it != entities.end();it++)
+	for (uint32_t i = 0; i < entities.size(); i++)
 	{
-		auto& entity = *it;
+		auto& entity = entities[i];
+
+		if (Utils::IsType<Entity, Enemy>(entity.get()))
+		{
+			dynamic_cast<Enemy*>(entity.get())->Shoot(player);
+		}
+
 		// mob intersects player
 		if (entity->Intersect(player))
 		{
-			if (player->attackClock.getElapsedTime() >= player->attackCooldown)
+			if (Utils::IsType<Entity, Enemy>(entity.get()))
 			{
-				std::cout << "mob intersects player" << std::endl;
-				player->SetHealth(player->GetHealth() - 10);
-				player->attackClock.restart();
-
-				if (player->GetHealth() <= 0)
+				if (player->attackClock.getElapsedTime() >= player->attackCooldown)
 				{
-					//конец игры или респавн, что по логике реализуем
+					std::cout << "mob intersects player" << std::endl;
+					player->SetHealth(player->GetHealth() - 10);
+					player->attackClock.restart();
+					Resources::LoadGlobalSound("injured")->play();
 				}
+			}	
+
+			if (Utils::IsType<Entity, Bonus>(entity.get()))
+			{
+				((Bonus*)entity.get())->Update(player);
+				Erase(i);
+				i--;
+
+				continue;
 			}
 		}
 
@@ -40,13 +54,10 @@ void DynamicZone::Update(const shared_ptr<Player>& player)
 					((Bullet*)playerEntity.get())->SetFlying(false);
 					player->SetPoints(player->GetPoints() + 1);
 					std::cout << "player bullets intersects mobs" << std::endl;
-					entities.erase(it);
-					if (entities.empty())
-					{
-						break;
-					}
-					it = entities.begin();
-					break; // Выходим из цикла, так как сущность уже удалена
+					Erase(i);
+					i--;
+
+					break;
 				}
 			}
 		}
@@ -59,6 +70,7 @@ void DynamicZone::Update(const shared_ptr<Player>& player)
 				if(ent->Intersect(player))
 					if (Utils::IsType<Entity, Bullet>(ent.get()))
 					{
+						Resources::LoadGlobalSound("injured")->play();
 						std::cout << "mob bullets intersects player" << std::endl;
 						((Bullet*)ent.get())->SetFlying(false);
 						player->SetHealth(player->GetHealth() - 10);
@@ -70,10 +82,23 @@ void DynamicZone::Update(const shared_ptr<Player>& player)
 					}
 			}
 		}
+
 		if (entities.empty())
 		{
 			break;
 		}
-		
+	}
+}
+
+void DynamicZone::Update(const sf::Time& elapsed)
+{
+	if (entities.empty())
+	{
+		this->RandDefaultEnemies(5);
+	}
+
+	for (auto& entity : entities)
+	{
+		entity->Update(elapsed);
 	}
 }

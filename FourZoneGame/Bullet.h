@@ -16,7 +16,7 @@ protected:
 	bool isFlying = true;;
 
 	sf::Vector2f direction{ 0.f, 0.f };
-	sf::Vector2f speed{ 0.f, 0.f };
+	sf::Vector2f speed{ 2.f, 2.f };
 	sf::Vector2f velocity{ 0.f, 0.f };
 };
 

@@ -20,6 +20,7 @@ public:
 	sf::Vector2f GetShotPoint() const { return shotPoint; }
 
 	bool isVisible() const { return Visible; }
+	void SetVisible(bool flag) { Visible = flag; }
 	bool isSlliding() const { return Sliding; }
 	bool isShooting() const { return Shooting; }
 
@@ -30,8 +31,10 @@ public:
 	void SetPoints(int point) { this->points = point; }
 
 	int GetHealth() { return health; }
-	void SetHealth(int health) { this->health = health; }
+	void SetHealth(int health) { this->health = health; if (health <= 0) Kill(); }
 
+	void Kill() { isAlive = false; }
+	bool IsAlive() const { return isAlive; }
 
 	sf::Clock attackClock;
 	const sf::Time attackCooldown = sf::seconds(1); // ќпредел€ем интервал в одну секунду между атаками
@@ -41,11 +44,12 @@ private:
 	bool Visible = true;
 	bool Sliding = false;
 	bool Shooting = false;
+	bool isAlive = true;
 
 	int points = 0;
 	int health = 100;
 
-	const float  speedFactor{ 0.1f };
+	const float  speedFactor{ 0.3f };
 	sf::Vector2f velocity{ 0.f, 0.f };
 	sf::Vector2f direction{ 0.f, 0.f };
 

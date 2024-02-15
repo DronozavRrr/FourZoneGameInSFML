@@ -10,6 +10,7 @@ private:
 	static std::map<uint32_t, shared_ptr<sf::Texture>> Textures;
 	static std::map<uint32_t, shared_ptr<sf::SoundBuffer>> SoundBuffers;
 	static std::map<uint32_t, shared_ptr<sf::Font>> Fonts;
+	static std::map<uint32_t, shared_ptr<sf::Sound>> Sounds;
 public:
 	static const char* PLACEHOLDER;
 	static void Init();
@@ -27,6 +28,7 @@ public:
 	static shared_ptr<sf::SoundBuffer> GetSoundBuffer(const string& name);
 	static shared_ptr<sf::Sound>       LoadSound(const string& name, const string& path);
 	static shared_ptr<sf::Sound>       GetSound(const string& name);
+	static shared_ptr<sf::Sound>       LoadGlobalSound(const string& name);
 
 	static shared_ptr<sf::Font>       LoadFont(const string& name, const string& path);
 	static shared_ptr<sf::Font>       GetFont(const string& name);

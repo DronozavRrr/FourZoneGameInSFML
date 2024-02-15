@@ -8,7 +8,7 @@ void Player::Update(const sf::Time& elapsed)
 {
 	if (!isSlliding())
 		velocity = { 0.f, 0.f };
-	/////ouhcffdvuohedobhvohsbh question about speed
+
 	auto&& temp = elapsed.asMilliseconds() * speedFactor;
 	sf::Vector2f speed = { temp, temp };
 
@@ -85,7 +85,6 @@ void Player::Shoot(const sf::FloatRect& zoneBounds)
 		bullet->SetZoneBounds(zoneBounds);
 		bullet->SetDirection(Utils::Normalize(direction));
 		bullet->SclaleRelativeWindow({ 0.01f, 0.01f }, this->zoneBounds.getSize());
-		bullet->SetSpeed({ 1.f, 1.f });
 		// rotate bullet sprite
 		float angle = Utils::ToDegrees(Utils::Angle(direction));
 		bullet->GetSprite()->setRotation(angle);

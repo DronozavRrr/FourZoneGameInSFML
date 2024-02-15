@@ -12,5 +12,6 @@ public:
 
 	virtual void Update(const sf::Time& elapsed) override;
 	virtual void Update(const shared_ptr<Player>& player);
+	virtual void RandDefaultEnemies(uint32_t count);
 };
 

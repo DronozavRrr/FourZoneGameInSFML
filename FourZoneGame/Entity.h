@@ -32,12 +32,18 @@ public:
 	virtual void                   SetSprite(const shared_ptr<sf::Sprite>& _sprite) { sprite = sprite; }
 	virtual void                   SetPosition(const sf::Vector2f& pos) { sprite->setPosition(pos); }
 	virtual void                   SetOrigin(const sf::Vector2f& pos) { sprite->setOrigin(pos); }
+	virtual void                   SetWindowBounds(const sf::Vector2f& p) { windowBounds = p; }
+	virtual sf::Vector2f           GetWindowBouds() const { return windowBounds; }
 
 	virtual sf::Vector2f GetRelativeWindowScale(const sf::Vector2f& windowSize) const;
 	virtual void	     SclaleRelativeWindow(const sf::Vector2f& scale, const sf::Vector2f& windowSize);
 
 	virtual bool Intersect(const shared_ptr<Entity>& entity) const;
 	virtual bool Contains(const shared_ptr<Entity>& entity) const;
+
+	virtual void StartClock() { clock = unique_ptr<sf::Clock>(new sf::Clock()); }
+	virtual void RestartClock() { clock->restart();  }
+	virtual sf::Time getElapsed() { return clock->getElapsedTime(); }
 
 	// Sound
 	virtual void SetSound(const shared_ptr<sf::Sound>& s) { sound = s; }
@@ -49,5 +55,7 @@ protected:
 	shared_ptr<sf::Sprite>     sprite;
 	shared_ptr<sf::Sound>      sound;
 	sf::FloatRect              zoneBounds{ {0.f, 0.f}, {0.f, 0.f} };
+	sf::Vector2f               windowBounds;
+	unique_ptr<sf::Clock>      clock;
 };
 

@@ -4,6 +4,8 @@
 std::map<uint32_t, shared_ptr<sf::Texture>> Resources::Textures = std::map<uint32_t, shared_ptr<sf::Texture>>();
 std::map<uint32_t, shared_ptr<sf::SoundBuffer>> Resources::SoundBuffers = std::map<uint32_t, shared_ptr<sf::SoundBuffer>>();
 std::map<uint32_t, shared_ptr<sf::Font>> Resources::Fonts = std::map<uint32_t, shared_ptr<sf::Font>>();
+std::map<uint32_t, shared_ptr<sf::Sound>> Resources::Sounds = std::map<uint32_t, shared_ptr<sf::Sound>>();
+
 
 const char* Resources::PLACEHOLDER = "placeholder";
 
@@ -128,6 +130,20 @@ shared_ptr<sf::Sound> Resources::GetSound(const string& name)
 {
     return shared_ptr<sf::Sound>(new sf::Sound(*GetSoundBuffer(name)));
 }
+
+shared_ptr<sf::Sound> Resources::LoadGlobalSound(const string& name)
+{
+    uint32_t id = Utils::Hash(name);
+
+    // if texture already exists, return that handle
+    if (Resources::Sounds.find(id) != Resources::Sounds.end())
+        return Resources::Sounds[id];
+
+    const auto& sound = GetSound(name);
+    Sounds[id] = sound;
+    return sound;
+}
+
 
 shared_ptr<sf::Sound> Resources::LoadSound(const string& name, const string& path)
 {
