@@ -28,6 +28,8 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="SlideZone.cpp" />
+    <ClCompile Include="StaticZone.cpp" />
+    <ClCompile Include="Trap.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Zone.cpp" />
   </ItemGroup>
@@ -41,10 +43,13 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="SlideZone.h" />
+    <ClInclude Include="StaticZone.h" />
+    <ClInclude Include="Trap.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Zone.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "SlideZone.h"
 #include "Enemy.h"
+#include "Trap.h"
+#include "StaticZone.h"
 
 Game::Game(uint32_t width, uint32_t height)
 {
@@ -28,6 +30,9 @@ Game::Game(uint32_t width, uint32_t height)
 
     // init bullet
     Resources::LoadTexture("bullet", "res/img/bullet.png");
+
+    //init trap
+    Resources::LoadTexture("trap", "res/img/trap.png");
 
     // init zones
     zones.resize(4);
@@ -70,6 +75,20 @@ Game::Game(uint32_t width, uint32_t height)
     slideZone = shared_ptr<SlideZone>(new SlideZone(sprite, sound));
     slideZone->SclaleRelativeWindow({ 0.5, 0.5 }, Utils::ToVector2f(window->getSize()));
     slideZone->SetPosition({ windowSize.x * 0.5f, windowSize.y * 0.5f });
+
+    //StaticZone
+    for (size_t i = 0; i < 8; i++)
+    {
+        auto bound = zones[ZONE_TYPE::STATIC]->GetBounds();
+        const auto& sprite = Resources::GetSprite("trap");
+        sprite->setOrigin({ player->GetBounds().getSize().x * 0.f, player->GetBounds().getSize().y * 0.5f });
+        sprite->setPosition(Utils::RandomBetween(bound.left, bound.left + bound.width), Utils::RandomBetween(bound.top, bound.top + bound.height));
+        const auto& sound = Resources::GetSound("shot");
+        Trap* trap = new Trap(sprite, sound);
+        trap->SclaleRelativeWindow({ 0.05, 0.05 }, Utils::ToVector2f(window->getSize()));
+        trap->SetZoneBounds(zones[ZONE_TYPE::STATIC]->GetBounds());
+        zones[ZONE_TYPE::STATIC]->Add(trap);
+    }
 }
 
 void Game::Run()
@@ -116,6 +135,8 @@ void Game::Run()
             Update(elapsed);
             Draw(elapsed);
         }
+        Update(elapsed);
+        Draw(elapsed);
 
       
     }
@@ -190,7 +211,7 @@ void Game::DrawPointsAndHealth(const shared_ptr<Player>& player)
 
 void Game::DrawFPS(const sf::Time& elapsed)
 {
-    sf::Text text(sf::String(" " + std::to_string(elapsed.asMicroseconds()) + " ms"), *Resources::GetFont("font"), 28);
+    sf::Text text(sf::String(" " + std::to_string(elapsed.asMilliseconds()) + " ms"), *Resources::GetFont("font"), 28);
     text.setFillColor(sf::Color::Green);
     text.setStyle(sf::Text::Bold);
     text.setPosition(1650, 10);

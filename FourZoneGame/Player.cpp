@@ -8,7 +8,7 @@ void Player::Update(const sf::Time& elapsed)
 {
 	if (!isSlliding())
 		velocity = { 0.f, 0.f };
-
+	/////ouhcffdvuohedobhvohsbh question about speed
 	auto&& temp = elapsed.asMilliseconds() * speedFactor;
 	sf::Vector2f speed = { temp, temp };
 
